@@ -1,7 +1,9 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { Card, Text, Divider } from "@ui-kitten/components";
+
+import styles from "../styles/Configurations";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -59,24 +61,5 @@ const Configurations = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  containerPage: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "20%",
-  },
-  graphs: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "10%",
-    marginLeft: "10%",
-  },
-  graph: {
-    marginTop: "2%",
-  },
-});
 
 export default Configurations;

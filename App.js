@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { FontAwesome5, AntDesign, Feather } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,13 +6,15 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-import Home from "./components/Home";
-import Configurations from "./components/Configurations";
-import Transactions from "./components/Transactions";
+import Home from "./pages/Home";
+import Configurations from "./pages/Configurations";
+import Transactions from "./pages/Transactions";
+
+import styles from "./styles/App";
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
@@ -66,16 +67,6 @@ export default function App() {
       </ApplicationProvider>
     </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  navigator: {
-    marginBottom: 20,
-  },
-});
+export default App;
