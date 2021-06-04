@@ -4,8 +4,6 @@ import CreditCardGenerator from "creditcard-generator";
 import CreditCardDisplay from "react-native-credit-card-display";
 import { Icon, Avatar, Button } from "@ui-kitten/components";
 
-import { Ionicons } from "@expo/vector-icons";
-
 import profilePhoto from "../assets/profilePhoto.jpg";
 
 const Home = () => {

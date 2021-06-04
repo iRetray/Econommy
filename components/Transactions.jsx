@@ -1,25 +1,14 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, Icon, List, ListItem, TabBar } from "@ui-kitten/components";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-
-import { AntDesign, FontAwesome5, Feather } from "@expo/vector-icons";
-
-const Tab = createMaterialTopTabNavigator();
-
-import IncomesTab from "./IncomesTab";
-import ExpensesTab from "./ExpensesTab";
+import { Button, Icon, List, ListItem } from "@ui-kitten/components";
 
 const Transactions = () => {
-  const [selectedTab, setSelectedTab] = React.useState("INCOMES");
-
   const data = new Array(20).fill({
     title: "Title for Item",
     description: "Description for Item",
   });
 
-  const renderItemAccessory = (props) => <Button size="tiny">FOLLOW</Button>;
+  const renderItemAccessory = () => <Button size="tiny">FOLLOW</Button>;
 
   const renderItemIcon = (props) => <Icon {...props} name="person" />;
 
