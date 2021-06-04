@@ -1,12 +1,11 @@
-import React from "react";
-import { Text, StyleSheet, View, SafeAreaView, ScrollView } from "react-native";
-
-import { Button, Icon, List, ListItem } from "@ui-kitten/components";
+import React from 'react';
+import { SafeAreaView, ScrollView } from 'react-native';
+import { Button, Icon, List, ListItem } from '@ui-kitten/components';
 
 const Transactions = () => {
   const data = new Array(20).fill({
-    title: "Title for Item",
-    description: "Description for Item",
+    title: 'Title for Item',
+    description: 'Description for Item',
   });
 
   const renderItemAccessory = (props) => <Button size="tiny">FOLLOW</Button>;
