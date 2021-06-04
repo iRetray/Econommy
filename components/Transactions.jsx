@@ -1,20 +1,22 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Button, Icon, List, ListItem, TabBar } from '@ui-kitten/components';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, Icon, List, ListItem, TabBar } from "@ui-kitten/components";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+
+import { AntDesign, FontAwesome5, Feather } from "@expo/vector-icons";
 
 const Tab = createMaterialTopTabNavigator();
 
-import IncomesTab from './IncomesTab';
-import ExpensesTab from './ExpensesTab';
+import IncomesTab from "./IncomesTab";
+import ExpensesTab from "./ExpensesTab";
 
 const Transactions = () => {
-  const [selectedTab, setSelectedTab] = React.useState('INCOMES');
+  const [selectedTab, setSelectedTab] = React.useState("INCOMES");
 
   const data = new Array(20).fill({
-    title: 'Title for Item',
-    description: 'Description for Item',
+    title: "Title for Item",
+    description: "Description for Item",
   });
 
   const renderItemAccessory = (props) => <Button size="tiny">FOLLOW</Button>;
@@ -32,48 +34,38 @@ const Transactions = () => {
 
   return (
     <SafeAreaView>
-      <View style={styles.tabBar}>
-        <View style={styles.tab}>
-          <Icon style={styles.iconsTab} fill="#389e0d" name="flash" />
-          <Text style={styles.textIncomes}>Ingresos</Text>
+      <View style={styles.container}>
+        <View style={styles.tabBar}>
+          <Text style={styles.title}>
+            <Text style={styles.strong}>Historial de transacciones</Text>
+          </Text>
         </View>
-        <View style={styles.tab}>
-          <Icon style={styles.iconsTab} fill="#595959" name="briefcase" />
-          <Text style={styles.work}>Todo</Text>
-        </View>
-        <View style={{ ...styles.tab }}>
-          <Icon style={styles.iconsTab} fill="#595959" name="briefcase" />
-          <Text style={styles.work}>Gastos</Text>
-        </View>
+        <ScrollView style={styles.list}>
+          <List data={data} renderItem={renderItem} />
+        </ScrollView>
       </View>
-
-      <Text>El tab seleccionado es: {selectedTab}</Text>
-      <ScrollView>
-        <List data={data} renderItem={renderItem} />
-      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  tabBar: {
-    marginTop: '10%',
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "10%",
   },
-  tab: {
-    alignItems: 'center',
-    alignContent: 'center',
-    width: '33%',
+  title: {
+    textAlign: "left",
+    marginLeft: 20,
+    marginRight: 20,
+    fontSize: 35,
+    fontWeight: "bold",
   },
-  iconsTab: {
-    width: 30,
-    height: 30,
+  strong: {
+    fontWeight: "bold",
   },
-  textIncomes: {
-    color: '#389e0d',
-    fontWeight: 'bold',
+  list: {
+    marginTop: "3%",
   },
 });
 

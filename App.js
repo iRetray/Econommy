@@ -1,15 +1,15 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { FontAwesome5, AntDesign, Feather } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import * as eva from '@eva-design/eva';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import React from "react";
+import { StyleSheet } from "react-native";
+import { FontAwesome5, AntDesign, Feather } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-import Home from './components/Home';
-import Configurations from './components/Configurations';
-import Transactions from './components/Transactions';
+import Home from "./components/Home";
+import Configurations from "./components/Configurations";
+import Transactions from "./components/Transactions";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +23,7 @@ export default function App() {
             initialRouteName="Mis Finanzas"
             screenOptions={({ route }) => ({
               tabBarIcon: ({ focused, color, size }) => {
-                if (route.name === 'Mis Finanzas') {
+                if (route.name === "Mis Finanzas") {
                   return (
                     <FontAwesome5
                       name="home"
@@ -31,7 +31,7 @@ export default function App() {
                       color={color}
                     />
                   );
-                } else if (route.name === 'Perfil') {
+                } else if (route.name === "Perfil") {
                   return (
                     <Feather
                       name="user"
@@ -39,7 +39,7 @@ export default function App() {
                       color={color}
                     />
                   );
-                } else if (route.name === 'Historial') {
+                } else if (route.name === "Historial") {
                   return (
                     <AntDesign
                       name="creditcard"
@@ -51,9 +51,9 @@ export default function App() {
               },
             })}
             tabBarOptions={{
-              activeTintColor: '#1890ff',
-              inactiveTintColor: '#bfbfbf',
-              style: { height: '8%' },
+              activeTintColor: "#1890ff",
+              inactiveTintColor: "#bfbfbf",
+              style: { height: "8%" },
               labelStyle: { marginBottom: 10 },
             }}
             label
@@ -71,9 +71,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   navigator: {
     marginBottom: 20,
