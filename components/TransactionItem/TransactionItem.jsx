@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { View, Text } from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import NumberFormat from "react-number-format";
+import moment from "moment";
+import "moment/locale/es";
 
 import styles from "./styles";
 
@@ -10,7 +12,7 @@ INCOME -> Ingreso de dinero
 EXPENSE -> Gasto 
 */
 
-const TransactionItem = ({ amount, type, description }) => {
+const TransactionItem = ({ amount, type, date, description }) => {
   const [isExpense, setIsExpense] = React.useState(false);
 
   useEffect(() => {
@@ -18,17 +20,36 @@ const TransactionItem = ({ amount, type, description }) => {
   }, [type]);
 
   return (
-    <View style={styles.transaction}>
-      <View>
+    <View style={isExpense ? styles.transactionRight : styles.transactionLeft}>
+      {/* <View>
         {isExpense ? (
           <AntDesign name="shoppingcart" size={40} color="#f5222d" />
         ) : (
           <MaterialCommunityIcons name="bank-plus" size={40} color="#389e0d" />
         )}
-      </View>
+      </View> */}
       <View>
-        <Text>{amount}</Text>
-        <Text>{description}</Text>
+        <View style={styles.date}>
+          <Text style={styles.dateMonth}>
+            {moment(date).format("MMMM D YYYY")}
+          </Text>
+          <Text style={styles.hour}>{moment(date).format("h:mm a ")}</Text>
+        </View>
+        <NumberFormat
+          value={amount}
+          displayType={"text"}
+          thousandSeparator={"."}
+          decimalSeparator={","}
+          prefix={"$ "}
+          renderText={(value) => (
+            <Text style={isExpense ? styles.amountRight : styles.amountLeft}>
+              {value}
+            </Text>
+          )}
+        />
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}>{description}</Text>
+        </View>
       </View>
     </View>
   );
@@ -37,6 +58,7 @@ const TransactionItem = ({ amount, type, description }) => {
 TransactionItem.propTypes = {
   amount: PropTypes.number,
   type: PropTypes.string,
+  date: PropTypes.number,
   description: PropTypes.string,
 };
 
