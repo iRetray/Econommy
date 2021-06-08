@@ -14,7 +14,7 @@ const onlyExpenses = new Array(5).fill({
   amount: 450000,
   type: "EXPENSE",
   date: 1622852631156,
-  description: "Dinero gastado en cositas geniales",
+  description: "Compra en Amazon de una poderosisima RTX 3060 MSI Gaming X",
 });
 
 const transactionsData = [...onlyIncomes, ...onlyExpenses];

@@ -7,8 +7,10 @@ import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
 import Home from "./pages/Home";
-import Configurations from "./pages/Configurations";
+//import Configurations from "./pages/Configurations";
 import Transactions from "./pages/Transactions";
+
+import BottomSheetAdd from "./components/BottomSheetAdd/BottomSheetAdd";
 
 import styles from "./styles/App";
 
@@ -61,7 +63,7 @@ const App = () => {
           >
             <Tab.Screen name="Historial" component={Transactions} />
             <Tab.Screen name="Mis Finanzas" component={Home} />
-            <Tab.Screen name="Perfil" component={Configurations} />
+            <Tab.Screen name="Perfil" component={BottomSheetAdd} />
           </Tab.Navigator>
         </NavigationContainer>
       </ApplicationProvider>

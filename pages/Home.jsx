@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { Text, View, SafeAreaView } from "react-native";
 import CreditCardGenerator from "creditcard-generator";
 import CreditCardDisplay from "react-native-credit-card-display";
 import { Icon, Avatar, Button } from "@ui-kitten/components";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 
 import profilePhoto from "../assets/profilePhoto.jpg";
-
 import styles from "../styles/Home";
 
 const Home = () => {
+  const bottomSheetModalRef = useRef(null);
+
   const getRandomCC = () => {
     return CreditCardGenerator.GenCC();
   };
+
+  const snapPoints = useMemo(() => ["25%", "50%"], []);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const handleSheetChanges = useCallback((index) => {
+    console.log("handleSheetChanges", index);
+    handlePresentModalPress();
+  }, []);
 
   return (
     <>
@@ -72,11 +88,25 @@ const Home = () => {
                   fill="white"
                 />
               )}
+              onPress={() => handlePresentModalPress()}
             >
               <Text style={styles.textButton}>Añadir movimiento</Text>
             </Button>
           </View>
         </View>
+        <BottomSheetModalProvider>
+          <BottomSheetModal
+            style={styles.bottomSheet}
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            onChange={handleSheetChanges}
+          >
+            <View style={styles.contentContainer}>
+              <Text>Awesome 🎉</Text>
+            </View>
+          </BottomSheetModal>
+        </BottomSheetModalProvider>
       </SafeAreaView>
     </>
   );
