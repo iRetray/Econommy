@@ -10,23 +10,22 @@ import {
 
 import profilePhoto from "../assets/profilePhoto.jpg";
 import styles from "../styles/Home";
+import { useState } from "react";
+import AddTransaction from "./AddTransaction";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const bottomSheetModalRef = useRef(null);
 
   const getRandomCC = () => {
     return CreditCardGenerator.GenCC();
   };
 
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
+  const goToAddTransaction = () => {
+    this.props.navigation.navigate("Screen");
+  };
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
-  }, []);
-
-  const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
-    handlePresentModalPress();
   }, []);
 
   return (
@@ -64,18 +63,24 @@ const Home = () => {
               </Text>
             </View>
           </View>
-          <View style={styles.moneyView}>
-            <Text style={styles.title}>Resumen mensual</Text>
-            <Text style={styles.avaliable}>{"$4.300.000"}</Text>
-            <View style={styles.description}>
-              <Icon style={styles.iconAvaliable} fill="#389e0d" name="flash" />
-              <Text style={styles.miniDescription}>Disponible</Text>
-            </View>
-            <Text style={styles.spend}>{"$850.000"}</Text>
-            <View></View>
-            <View style={styles.description}>
-              <Icon style={styles.icon} fill="#f5222d" name="close-circle" />
-              <Text style={styles.miniSpend}> Gastado este mes</Text>
+          <View style={{ zIndex: 0 }}>
+            <View style={styles.moneyView}>
+              <Text style={styles.title}>Resumen mensual</Text>
+              <Text style={styles.avaliable}>{"$4.300.000"}</Text>
+              <View style={styles.description}>
+                <Icon
+                  style={styles.iconAvaliable}
+                  fill="#389e0d"
+                  name="flash"
+                />
+                <Text style={styles.miniDescription}>Disponible</Text>
+              </View>
+              <Text style={styles.spend}>{"$850.000"}</Text>
+              <View></View>
+              <View style={styles.description}>
+                <Icon style={styles.icon} fill="#f5222d" name="close-circle" />
+                <Text style={styles.miniSpend}> Gastado este mes</Text>
+              </View>
             </View>
           </View>
           <View style={styles.buttonContainer}>
@@ -88,25 +93,12 @@ const Home = () => {
                   fill="white"
                 />
               )}
-              onPress={() => handlePresentModalPress()}
+              onPress={() => navigation.navigate("Details")}
             >
               <Text style={styles.textButton}>Añadir movimiento</Text>
             </Button>
           </View>
         </View>
-        <BottomSheetModalProvider>
-          <BottomSheetModal
-            style={styles.bottomSheet}
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            onChange={handleSheetChanges}
-          >
-            <View style={styles.contentContainer}>
-              <Text>Awesome 🎉</Text>
-            </View>
-          </BottomSheetModal>
-        </BottomSheetModalProvider>
       </SafeAreaView>
     </>
   );

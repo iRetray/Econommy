@@ -32,7 +32,9 @@ const App = () => {
           onChange={handleSheetChanges}
         >
           <View style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
+            <View>
+              <Text>Añadir transacción</Text>
+            </View>
           </View>
         </BottomSheetModal>
       </View>
