@@ -1,16 +1,14 @@
 import React from "react";
-import { FontAwesome5, AntDesign, Feather } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign, Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-import Home from "./pages/Home";
-//import Configurations from "./pages/Configurations";
-import Transactions from "./pages/Transactions";
-
-import BottomSheetAdd from "./components/BottomSheetAdd/BottomSheetAdd";
+import Home from "./screens/Home";
+import Transactions from "./screens/Transactions";
+import AddTransaction from "./screens/AddTransaction";
 
 import styles from "./styles/App";
 
@@ -34,10 +32,10 @@ const App = () => {
                       color={color}
                     />
                   );
-                } else if (route.name === "Perfil") {
+                } else if (route.name === "Añadir") {
                   return (
-                    <Feather
-                      name="user"
+                    <Ionicons
+                      name="add-circle-outline"
                       size={focused ? size + 5 : size}
                       color={color}
                     />
@@ -63,7 +61,7 @@ const App = () => {
           >
             <Tab.Screen name="Historial" component={Transactions} />
             <Tab.Screen name="Mis Finanzas" component={Home} />
-            <Tab.Screen name="Perfil" component={BottomSheetAdd} />
+            <Tab.Screen name="Añadir" component={AddTransaction} />
           </Tab.Navigator>
         </NavigationContainer>
       </ApplicationProvider>

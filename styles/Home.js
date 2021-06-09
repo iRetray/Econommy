@@ -124,25 +124,6 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 5,
   },
-  buttonContainer: {
-    marginTop: 20,
-    marginHorizontal: 70,
-    zIndex: 0,
-  },
-  textButton: {
-    fontSize: 20,
-  },
-  button: {
-    borderRadius: 30,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
 });
 
 export default styles;

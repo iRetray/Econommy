@@ -21,13 +21,6 @@ const TransactionItem = ({ amount, type, date, description }) => {
 
   return (
     <View style={isExpense ? styles.transactionRight : styles.transactionLeft}>
-      {/* <View>
-        {isExpense ? (
-          <AntDesign name="shoppingcart" size={40} color="#f5222d" />
-        ) : (
-          <MaterialCommunityIcons name="bank-plus" size={40} color="#389e0d" />
-        )}
-      </View> */}
       <View>
         <View style={styles.date}>
           <Text style={styles.dateMonth}>

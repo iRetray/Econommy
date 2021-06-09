@@ -1,32 +1,16 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React from "react";
 import { Text, View, SafeAreaView } from "react-native";
 import CreditCardGenerator from "creditcard-generator";
 import CreditCardDisplay from "react-native-credit-card-display";
-import { Icon, Avatar, Button } from "@ui-kitten/components";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
+import { Icon, Avatar } from "@ui-kitten/components";
 
 import profilePhoto from "../assets/profilePhoto.jpg";
 import styles from "../styles/Home";
-import { useState } from "react";
-import AddTransaction from "./AddTransaction";
 
-const Home = ({ navigation }) => {
-  const bottomSheetModalRef = useRef(null);
-
+const Home = () => {
   const getRandomCC = () => {
     return CreditCardGenerator.GenCC();
   };
-
-  const goToAddTransaction = () => {
-    this.props.navigation.navigate("Screen");
-  };
-
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
 
   return (
     <>
@@ -82,21 +66,6 @@ const Home = ({ navigation }) => {
                 <Text style={styles.miniSpend}> Gastado este mes</Text>
               </View>
             </View>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button
-              style={styles.button}
-              accessoryLeft={() => (
-                <Icon
-                  name="plus-circle-outline"
-                  style={{ width: 32, height: 32 }}
-                  fill="white"
-                />
-              )}
-              onPress={() => navigation.navigate("Details")}
-            >
-              <Text style={styles.textButton}>Añadir movimiento</Text>
-            </Button>
           </View>
         </View>
       </SafeAreaView>
