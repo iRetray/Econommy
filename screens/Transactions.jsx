@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
+import PropTypes from "prop-types";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import TransactionItem from "../components/TransactionItem/TransactionItem";
 import { Button } from "@ui-kitten/components";
 
-import StorageService from "../services/StorageService";
+import TransactionItem from "../components/TransactionItem/TransactionItem";
 
-const Transactions = () => {
-  const [transactionsList, setTransactionsList] = useState([]);
-
-  useEffect(() => {
-    updateTransactions();
-  }, []);
-
-  const updateTransactions = () => {
-    StorageService.getObjectData({ key: "transactions" }).then((response) => {
-      setTransactionsList(response.data);
-    });
-  };
+const Transactions = ({ transactionsList }) => {
+  const navigation = useNavigation();
+  const scrollViewRef = useRef();
 
   return (
     <SafeAreaView>
@@ -26,7 +18,13 @@ const Transactions = () => {
             <Text style={styles.strong}>Historial de transacciones</Text>
           </Text>
         </View>
-        <ScrollView style={styles.list}>
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.list}
+          onContentSizeChange={() =>
+            scrollViewRef.current.scrollToEnd({ animated: true })
+          }
+        >
           <View style={styles.transactionsContainer}>
             {transactionsList && transactionsList.length > 0 ? (
               transactionsList.map((transaction, index) => (
@@ -47,9 +45,9 @@ const Transactions = () => {
                   style={styles.button}
                   size="large"
                   appearance="ghost"
-                  onPress={() => updateTransactions()}
+                  onPress={() => navigation.navigate("Añadir")}
                 >
-                  Actualizar
+                  Crear transacción
                 </Button>
               </View>
             )}
@@ -58,6 +56,10 @@ const Transactions = () => {
       </View>
     </SafeAreaView>
   );
+};
+
+Transactions.propTypes = {
+  transactionsList: PropTypes.any,
 };
 
 const styles = StyleSheet.create({

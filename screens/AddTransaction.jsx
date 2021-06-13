@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
-import { Input, Divider, Button, Modal } from "@ui-kitten/components";
+import PropTypes from "prop-types";
+import { useNavigation } from "@react-navigation/native";
+import { Text, View, Keyboard } from "react-native";
+import { Input, Divider, Button, Modal, Icon } from "@ui-kitten/components";
 import {
   MaterialIcons,
   Feather,
   FontAwesome5,
   FontAwesome,
 } from "@expo/vector-icons";
-import { Icon } from "@ui-kitten/components";
-import StorageService from "../services/StorageService";
 import moment from "moment";
 import "moment/locale/es";
 
+import StorageService from "../services/StorageService";
+
 import styles from "../styles/AddTransaction";
 
-const AddTransaction = () => {
+const AddTransaction = ({ updateAppData }) => {
+  const navigation = useNavigation();
   const [valuesForm, setValuesForm] = useState({
     ammount: "",
     description: "",
@@ -55,6 +58,7 @@ const AddTransaction = () => {
             description: "",
             type: "",
           });
+          updateAppData();
         }
       });
     });
@@ -185,7 +189,10 @@ const AddTransaction = () => {
         >
           <Text
             style={{ ...styles.textButton, color: "white" }}
-            onPress={() => saveNewTransaction()}
+            onPress={() => {
+              Keyboard.dismiss();
+              saveNewTransaction();
+            }}
           >
             Añadir movimiento
           </Text>
@@ -206,7 +213,10 @@ const AddTransaction = () => {
           </Text>
           <Button
             style={styles.buttonModal}
-            onPress={() => setIsVisible(false)}
+            onPress={() => {
+              setIsVisible(false);
+              navigation.navigate("Historial");
+            }}
           >
             Ok
           </Button>
@@ -214,6 +224,10 @@ const AddTransaction = () => {
       </Modal>
     </View>
   );
+};
+
+AddTransaction.propTypes = {
+  updateAppData: PropTypes.any,
 };
 
 export default AddTransaction;

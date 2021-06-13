@@ -49,6 +49,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  delete: {
+    color: "#a8071a",
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 10,
+    maxWidth: 100,
+    textAlign: "center",
+    borderColor: "#a8071a",
+    borderWidth: 1,
+    borderRadius: 5,
+  },
   moneyView: {
     backgroundColor: "#ffffff",
     borderRadius: 20,
@@ -123,6 +134,43 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginRight: 5,
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalView: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10,
+    paddingVertical: 30,
+    maxWidth: "90%",
+    alignSelf: "center",
+  },
+  titleModal: {
+    fontSize: 30,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  textModal: {
+    padding: 20,
+    textAlign: "center",
+  },
+  buttonModal: {
+    marginHorizontal: 70,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

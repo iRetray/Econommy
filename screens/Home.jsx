@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Text, View, SafeAreaView } from "react-native";
 import CreditCardGenerator from "creditcard-generator";
 import CreditCardDisplay from "react-native-credit-card-display";
-import { Icon, Avatar } from "@ui-kitten/components";
+import { Icon, Avatar, Modal, Button } from "@ui-kitten/components";
+import { MaterialIcons } from "@expo/vector-icons";
+import NumberFormat from "react-number-format";
+
+import StorageService from "../services/StorageService";
 
 import profilePhoto from "../assets/profilePhoto.jpg";
 import styles from "../styles/Home";
 
-const Home = () => {
+const Home = ({ summary, updateAppData }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
   const getRandomCC = () => {
     return CreditCardGenerator.GenCC();
+  };
+
+  const deleteAllTransactions = () => {
+    StorageService.storeObjectData({
+      key: "transactions",
+      object: [],
+    }).then((response) => {
+      if (response.status === "SUCCESS") {
+        updateAppData();
+      }
+    });
   };
 
   return (
@@ -49,8 +67,36 @@ const Home = () => {
           </View>
           <View style={{ zIndex: 0 }}>
             <View style={styles.moneyView}>
-              <Text style={styles.title}>Resumen mensual</Text>
-              <Text style={styles.avaliable}>{"$4.300.000"}</Text>
+              <View style={styles.header}>
+                <Text style={styles.title}>Resumen mensual</Text>
+
+                <Button
+                  style={{ marginRight: -20 }}
+                  appearance="ghost"
+                  onPress={() => {
+                    setIsVisible(true);
+                  }}
+                  accessoryRight={() => (
+                    <MaterialIcons
+                      name="delete-forever"
+                      size={24}
+                      color="#595959"
+                    />
+                  )}
+                ></Button>
+              </View>
+
+              <NumberFormat
+                value={summary.avaliable}
+                displayType={"text"}
+                thousandSeparator={"."}
+                decimalSeparator={","}
+                prefix={"$ "}
+                renderText={(value) => (
+                  <Text style={styles.avaliable}>{value}</Text>
+                )}
+              />
+
               <View style={styles.description}>
                 <Icon
                   style={styles.iconAvaliable}
@@ -59,8 +105,18 @@ const Home = () => {
                 />
                 <Text style={styles.miniDescription}>Disponible</Text>
               </View>
-              <Text style={styles.spend}>{"$850.000"}</Text>
-              <View></View>
+
+              <NumberFormat
+                value={summary.spended}
+                displayType={"text"}
+                thousandSeparator={"."}
+                decimalSeparator={","}
+                prefix={"$ "}
+                renderText={(value) => (
+                  <Text style={styles.spend}>{value}</Text>
+                )}
+              />
+
               <View style={styles.description}>
                 <Icon style={styles.icon} fill="#f5222d" name="close-circle" />
                 <Text style={styles.miniSpend}> Gastado este mes</Text>
@@ -68,9 +124,40 @@ const Home = () => {
             </View>
           </View>
         </View>
+
+        <Modal
+          visible={isVisible}
+          backdropStyle={styles.backdrop}
+          onBackdropPress={() => setIsVisible(false)}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.titleModal}>Eliminar todo</Text>
+            <Text style={styles.textModal}>
+              <Text>¿Estas seguro de que quieres </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                eliminar todo el historial de transacciones?
+              </Text>
+            </Text>
+            <Button
+              status="danger"
+              style={styles.buttonModal}
+              onPress={() => {
+                deleteAllTransactions();
+                setIsVisible(false);
+              }}
+            >
+              Borrar historial
+            </Button>
+          </View>
+        </Modal>
       </SafeAreaView>
     </>
   );
+};
+
+Home.propTypes = {
+  summary: PropTypes.any,
+  updateAppData: PropTypes.any,
 };
 
 export default Home;

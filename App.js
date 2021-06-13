@@ -5,16 +5,68 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import StorageService from "./services/StorageService";
 
 import Home from "./screens/Home";
 import Transactions from "./screens/Transactions";
 import AddTransaction from "./screens/AddTransaction";
 
 import styles from "./styles/App";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const [numberOfTransactions, setNumberOfTransactions] = useState(0);
+  const [appData, setAppData] = useState({
+    transactionsList: [],
+    summary: {
+      avaliable: 450000,
+      spended: 50000,
+    },
+  });
+
+  useEffect(() => {
+    updateAppData();
+  }, []);
+
+  const updateAppData = () => {
+    StorageService.getObjectData({ key: "transactions" }).then((response) => {
+      let calculatedSpended = 0;
+      response.data
+        .filter((transaction) => transaction.type === "EXPENSE")
+        .map((transaction) => transaction.amount)
+        .forEach((amount) => {
+          if (amount) {
+            calculatedSpended = calculatedSpended + amount;
+          }
+        });
+
+      let calculatedAvaliable = 0;
+      response.data
+        .filter((transaction) => transaction.type === "INCOME")
+        .map((transaction) => transaction.amount)
+        .forEach((amount) => {
+          if (amount) {
+            calculatedAvaliable = calculatedAvaliable + amount;
+          }
+        });
+
+      const finalAvaliable = calculatedAvaliable - calculatedSpended;
+      setAppData({
+        ...appData,
+        transactionsList: response.data,
+        summary: {
+          avaliable: finalAvaliable,
+          spended: calculatedSpended,
+        },
+      });
+
+      setNumberOfTransactions(response.data.length);
+    });
+  };
+
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
@@ -60,9 +112,22 @@ const App = () => {
             }}
             label
           >
-            <Tab.Screen name="Historial" component={Transactions} />
-            <Tab.Screen name="Mis Finanzas" component={Home} />
-            <Tab.Screen name="Añadir" component={AddTransaction} />
+            <Tab.Screen
+              name="Historial"
+              options={{ tabBarBadge: numberOfTransactions }}
+            >
+              {() => (
+                <Transactions transactionsList={appData.transactionsList} />
+              )}
+            </Tab.Screen>
+            <Tab.Screen name="Mis Finanzas">
+              {() => (
+                <Home summary={appData.summary} updateAppData={updateAppData} />
+              )}
+            </Tab.Screen>
+            <Tab.Screen name="Añadir">
+              {() => <AddTransaction updateAppData={updateAppData} />}
+            </Tab.Screen>
           </Tab.Navigator>
         </NavigationContainer>
       </ApplicationProvider>
