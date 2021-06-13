@@ -56,6 +56,7 @@ const App = () => {
               inactiveTintColor: "#bfbfbf",
               style: { height: "8%" },
               labelStyle: { marginBottom: 10 },
+              keyboardHidesTabBar: true,
             }}
             label
           >

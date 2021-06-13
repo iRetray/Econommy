@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { Input, Divider, Button } from "@ui-kitten/components";
+import { Input, Divider, Button, Modal } from "@ui-kitten/components";
 import {
   MaterialIcons,
   Feather,
@@ -8,9 +8,11 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { Icon } from "@ui-kitten/components";
+import StorageService from "../services/StorageService";
+import moment from "moment";
+import "moment/locale/es";
 
 import styles from "../styles/AddTransaction";
-import { useState } from "react";
 
 const AddTransaction = () => {
   const [valuesForm, setValuesForm] = useState({
@@ -18,6 +20,7 @@ const AddTransaction = () => {
     description: "",
     type: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleChangeMoney = (number) => {
     const formatedNumber = number
@@ -26,6 +29,34 @@ const AddTransaction = () => {
     setValuesForm({
       ...valuesForm,
       ammount: formatedNumber,
+    });
+  };
+
+  const saveNewTransaction = () => {
+    const { description, type } = valuesForm;
+    const onlyNumbersAmount = valuesForm.ammount.replace(/[(.)]/g, "");
+    const newTransaction = {
+      amount: parseInt(onlyNumbersAmount),
+      type: type,
+      date: moment(),
+      description: description,
+    };
+
+    StorageService.getObjectData({ key: "transactions" }).then((response) => {
+      const newTransactionsArray = [...response.data, newTransaction];
+      StorageService.storeObjectData({
+        key: "transactions",
+        object: newTransactionsArray,
+      }).then((response) => {
+        if (response.status === "SUCCESS") {
+          setIsVisible(true);
+          setValuesForm({
+            ammount: "",
+            description: "",
+            type: "",
+          });
+        }
+      });
     });
   };
 
@@ -152,11 +183,35 @@ const AddTransaction = () => {
             valuesForm.type === ""
           }
         >
-          <Text style={{ ...styles.textButton, color: "white" }}>
+          <Text
+            style={{ ...styles.textButton, color: "white" }}
+            onPress={() => saveNewTransaction()}
+          >
             Añadir movimiento
           </Text>
         </Button>
       </View>
+
+      <Modal
+        visible={isVisible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setIsVisible(false)}
+      >
+        <View style={styles.modalView}>
+          <Text style={styles.titleModal}>¡Genial!</Text>
+          <Text style={styles.textModal}>
+            <Text>Se ha </Text>
+            <Text style={{ fontWeight: "bold" }}>guardado correctamente </Text>
+            <Text>tu nueva transacción</Text>
+          </Text>
+          <Button
+            style={styles.buttonModal}
+            onPress={() => setIsVisible(false)}
+          >
+            Ok
+          </Button>
+        </View>
+      </Modal>
     </View>
   );
 };

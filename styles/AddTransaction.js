@@ -65,6 +65,38 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalView: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10,
+    paddingVertical: 30,
+    maxWidth: "90%",
+    alignSelf: "center",
+  },
+  titleModal: {
+    fontSize: 30,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  textModal: {
+    padding: 20,
+    textAlign: "center",
+  },
+  buttonModal: {
+    marginHorizontal: 70,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 });
 
 export default styles;

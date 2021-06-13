@@ -1,25 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import TransactionItem from "../components/TransactionItem/TransactionItem";
+import { Button } from "@ui-kitten/components";
 
-const onlyIncomes = new Array(5).fill({
-  amount: 45000000,
-  type: "INCOME",
-  date: 1622852631156,
-  description:
-    "Pago de nómina en Sofka para el mes de Febrero, incluyendo prima de Junio",
-});
-
-const onlyExpenses = new Array(5).fill({
-  amount: 450000,
-  type: "EXPENSE",
-  date: 1622852631156,
-  description: "Compra en Amazon de una poderosisima RTX 3060 MSI Gaming X",
-});
-
-const transactionsData = [...onlyIncomes, ...onlyExpenses];
+import StorageService from "../services/StorageService";
 
 const Transactions = () => {
+  const [transactionsList, setTransactionsList] = useState([]);
+
+  useEffect(() => {
+    updateTransactions();
+  }, []);
+
+  const updateTransactions = () => {
+    StorageService.getObjectData({ key: "transactions" }).then((response) => {
+      setTransactionsList(response.data);
+    });
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -30,15 +28,31 @@ const Transactions = () => {
         </View>
         <ScrollView style={styles.list}>
           <View style={styles.transactionsContainer}>
-            {transactionsData.map((transaction, index) => (
-              <TransactionItem
-                key={index}
-                amount={transaction.amount}
-                type={transaction.type}
-                date={transaction.date}
-                description={transaction.description}
-              />
-            ))}
+            {transactionsList && transactionsList.length > 0 ? (
+              transactionsList.map((transaction, index) => (
+                <TransactionItem
+                  key={index}
+                  amount={transaction.amount}
+                  type={transaction.type}
+                  date={transaction.date}
+                  description={transaction.description}
+                />
+              ))
+            ) : (
+              <View>
+                <Text style={styles.noTransactions}>
+                  No tienes ninguna transacción
+                </Text>
+                <Button
+                  style={styles.button}
+                  size="large"
+                  appearance="ghost"
+                  onPress={() => updateTransactions()}
+                >
+                  Actualizar
+                </Button>
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>
@@ -69,6 +83,10 @@ const styles = StyleSheet.create({
   },
   transactionsContainer: {
     paddingVertical: "5%",
+  },
+  noTransactions: {
+    textAlign: "center",
+    fontSize: 20,
   },
 });
 

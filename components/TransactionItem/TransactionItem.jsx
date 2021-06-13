@@ -51,7 +51,7 @@ const TransactionItem = ({ amount, type, date, description }) => {
 TransactionItem.propTypes = {
   amount: PropTypes.number,
   type: PropTypes.string,
-  date: PropTypes.number,
+  date: PropTypes.string,
   description: PropTypes.string,
 };
 
