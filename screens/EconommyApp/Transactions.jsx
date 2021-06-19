@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button } from "@ui-kitten/components";
 
-import TransactionItem from "../components/TransactionItem/TransactionItem";
+import TransactionItem from "../../components/TransactionItem/TransactionItem";
 
 const Transactions = ({ transactionsList }) => {
   const navigation = useNavigation();

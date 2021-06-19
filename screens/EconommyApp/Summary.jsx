@@ -7,12 +7,12 @@ import { Icon, Avatar, Modal, Button } from "@ui-kitten/components";
 import { MaterialIcons } from "@expo/vector-icons";
 import NumberFormat from "react-number-format";
 
-import StorageService from "../services/StorageService";
+import StorageService from "../../services/StorageService";
 
-import profilePhoto from "../assets/profilePhoto.jpg";
-import styles from "../styles/Home";
+import profilePhoto from "../../assets/profilePhoto.jpg";
+import styles from "../../styles/Home";
 
-const Home = ({ summary, updateAppData }) => {
+const Summary = ({ summary, updateAppData }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const getRandomCC = () => {
@@ -155,9 +155,9 @@ const Home = ({ summary, updateAppData }) => {
   );
 };
 
-Home.propTypes = {
+Summary.propTypes = {
   summary: PropTypes.any,
   updateAppData: PropTypes.any,
 };
 
-export default Home;
+export default Summary;

@@ -12,9 +12,9 @@ import {
 import moment from "moment";
 import "moment/locale/es";
 
-import StorageService from "../services/StorageService";
+import StorageService from "../../services/StorageService";
 
-import styles from "../styles/AddTransaction";
+import styles from "../../styles/AddTransaction";
 
 const AddTransaction = ({ updateAppData }) => {
   const navigation = useNavigation();
