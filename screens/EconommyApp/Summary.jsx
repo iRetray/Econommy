@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import StorageService from "../../services/StorageService";
 import { Text, View, SafeAreaView } from "react-native";
 import CreditCardGenerator from "creditcard-generator";
 import CreditCardDisplay from "react-native-credit-card-display";
 import { Icon, Avatar, Modal, Button } from "@ui-kitten/components";
 import { MaterialIcons } from "@expo/vector-icons";
 import NumberFormat from "react-number-format";
-
-import StorageService from "../../services/StorageService";
 
 import styles from "../../styles/Home";
 

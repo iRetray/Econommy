@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigation } from "@react-navigation/native";
+import StorageService from "../../services/StorageService";
 import { Text, View, Keyboard } from "react-native";
 import { Input, Divider, Button, Modal, Icon } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 import {
   MaterialIcons,
   Feather,
   FontAwesome5,
   FontAwesome,
 } from "@expo/vector-icons";
+
 import moment from "moment";
 import "moment/locale/es";
-
-import StorageService from "../../services/StorageService";
 
 import styles from "../../styles/AddTransaction";
 

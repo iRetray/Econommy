@@ -1,36 +1,29 @@
 import React, { useRef, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import StorageService from "../../services/StorageService";
 import Carousel from "react-native-snap-carousel";
 import { View, Text, Dimensions, Image } from "react-native";
 import { Button, Input, Avatar } from "@ui-kitten/components";
 import { Feather, MaterialIcons, AntDesign, Entypo } from "@expo/vector-icons";
-
 import * as ImagePicker from "expo-image-picker";
-
 import logoApp from "../../assets/logoApp.png";
 
-import StorageService from "../../services/StorageService";
-
 import styles from "../../styles/RegisterUser";
+
 const screensData = [
   {
     name: "WELCOME",
   },
   {
-    name: "NAME",
-  },
-  {
-    name: "WORK",
-  },
-  {
-    name: "PHOTO",
+    name: "REGISTER",
   },
 ];
+
 const { width: screenWidth } = Dimensions.get("window");
 
 const RegisterUser = ({ getUserData }) => {
   const carouselRef = useRef(null);
-  const [entries, setEntries] = useState([]);
+  const [screens, setScreens] = useState([]);
   const [userData, setUserData] = useState({
     name: "",
     work: "",
@@ -39,14 +32,14 @@ const RegisterUser = ({ getUserData }) => {
   });
 
   useEffect(() => {
-    setEntries(screensData);
+    setScreens(screensData);
     requestPermissionsCamera();
   }, []);
 
   const requestPermissionsCamera = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
-      alert("Sorry, we need camera roll permissions to make this work! puto!");
+      alert("Econommy necesita el permiso de almacenamiento");
     }
   };
 
@@ -102,7 +95,7 @@ const RegisterUser = ({ getUserData }) => {
           </View>
         </Button>
       </View>
-    ) : item.name === "NAME" ? (
+    ) : (
       <View style={styles.container}>
         {userData.photo ? (
           <Avatar
@@ -159,52 +152,6 @@ const RegisterUser = ({ getUserData }) => {
           Registrarme
         </Button>
       </View>
-    ) : item.name === "WORK" ? (
-      <View style={styles.container}>
-        <Input
-          value={userData.work}
-          label="¿Cuál es tu trabajo?"
-          placeholder="Diseñador gráfico"
-          accessoryLeft={() => (
-            <MaterialIcons name="work-outline" size={24} color="black" />
-          )}
-          onChangeText={(nextValue) =>
-            setUserData({ ...userData, work: nextValue })
-          }
-        />
-        <Button style={styles.button} appearance="ghost" size="giant">
-          <View style={styles.buttonContainer}>
-            <Text style={styles.textNext}>Siguiente</Text>
-            <View style={{ marginHorizontal: 10 }}>
-              <AntDesign name="arrowright" size={25} color="#1890ff" />
-            </View>
-          </View>
-        </Button>
-      </View>
-    ) : item.name === "PHOTO" ? (
-      <View style={styles.container}>
-        <Button
-          style={styles.button}
-          appearance="ghost"
-          size="giant"
-          onPress={() => handleLaunchCamera()}
-        >
-          <View style={styles.containerPhoto}>
-            <Text style={styles.textNext}>Elegir una foto de perfil</Text>
-            <View style={{ marginHorizontal: 10, padding: 15 }}>
-              <Entypo name="images" size={40} color="#1890ff" />
-            </View>
-          </View>
-        </Button>
-        {userData.photo && (
-          <Avatar
-            source={{ uri: userData.photo }}
-            style={{ width: 200, height: 200 }}
-          />
-        )}
-      </View>
-    ) : (
-      <Text>Otra vuelta</Text>
     );
   };
 
@@ -216,7 +163,7 @@ const RegisterUser = ({ getUserData }) => {
           sliderWidth={screenWidth}
           sliderHeight={screenWidth}
           itemWidth={screenWidth - 60}
-          data={entries}
+          data={screens}
           renderItem={renderItem}
           hasParallaxImages={true}
         />
