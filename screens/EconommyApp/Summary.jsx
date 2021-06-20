@@ -9,10 +9,9 @@ import NumberFormat from "react-number-format";
 
 import StorageService from "../../services/StorageService";
 
-import profilePhoto from "../../assets/profilePhoto.jpg";
 import styles from "../../styles/Home";
 
-const Summary = ({ summary, updateAppData }) => {
+const Summary = ({ user, summary, updateAppData }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const getRandomCC = () => {
@@ -35,15 +34,19 @@ const Summary = ({ summary, updateAppData }) => {
       <SafeAreaView>
         <View style={styles.container}>
           <Text style={styles.text}>
-            <Text style={styles.strong}>Bienvenido de nuevo</Text>
+            <Text style={styles.strong}>Econommy</Text>
           </Text>
           <View style={styles.profile}>
-            <Avatar style={styles.avatar} size="giant" source={profilePhoto} />
+            <Avatar
+              style={styles.avatar}
+              size="giant"
+              source={{ uri: user.photo }}
+            />
             <View>
-              <Text style={styles.name}>Julian Camilo</Text>
+              <Text style={styles.name}> {user.name}</Text>
               <View style={styles.description}>
                 <Icon style={styles.iconWork} fill="#595959" name="briefcase" />
-                <Text style={styles.work}> Frontend developer</Text>
+                <Text style={styles.work}> {user.work}</Text>
               </View>
             </View>
           </View>
@@ -52,7 +55,7 @@ const Summary = ({ summary, updateAppData }) => {
               number={getRandomCC()}
               cvc={432}
               expiration="07/24"
-              name="Julian Camilo Cruz"
+              name={user.name}
               since="2020"
             />
             <View style={styles.descriptionInfo}>
@@ -156,6 +159,7 @@ const Summary = ({ summary, updateAppData }) => {
 };
 
 Summary.propTypes = {
+  user: PropTypes.any,
   summary: PropTypes.any,
   updateAppData: PropTypes.any,
 };

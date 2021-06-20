@@ -47,7 +47,6 @@ const App = () => {
           user: response.data,
         });
       }
-      console.log(response.data);
     });
   };
 
@@ -144,6 +143,7 @@ const App = () => {
               <Tab.Screen name="Mis Finanzas">
                 {() => (
                   <Summary
+                    user={appData.user}
                     summary={appData.summary}
                     updateAppData={updateAppData}
                   />
@@ -157,11 +157,12 @@ const App = () => {
             <Stack.Navigator initialRouteName="RegisterUser">
               <Stack.Screen
                 name="RegisterUser"
-                component={RegisterUser}
                 options={{
                   headerShown: false,
                 }}
-              />
+              >
+                {() => <RegisterUser getUserData={getUserData} />}
+              </Stack.Screen>
             </Stack.Navigator>
           )}
         </NavigationContainer>

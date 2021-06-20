@@ -7,6 +7,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    maxWidth: "90%",
+    marginHorizontal: "10%",
   },
   buttonContainer: {
     display: "flex",
@@ -21,10 +23,20 @@ const styles = StyleSheet.create({
     fontSize: 30,
     paddingHorizontal: 20,
   },
-  tab: {
-    height: 192,
+  textNext: {
+    textAlign: "center",
+    color: "#1890ff",
+    fontSize: 25,
+  },
+  containerPhoto: {
+    display: "flex",
+    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    maxWidth: 150,
+  },
+  buttonFinish: {
+    marginTop: 30,
+    borderRadius: 50,
   },
 });
 
